@@ -42,7 +42,7 @@ As of ```v1.0.0-alpha.2```, Resovauto calculates bar pre-sales by first counting
 Specific item extras aren't exposed to the API in a nice way, so Resovauto just pulls the total item extra value in £GBP, and divides by a constant (£4.00). If any item extras are purchases that aren't divisible by this constant (eg. ABD full exp.) then the output may be inaccurate. 
 
 Since ABD full exp. has been mostly removed now, I don't foresee much issue, but if it poses a problem the fix *is* possible, just difficult.
->[!NOTE]
+>[!IMPORTANT]
 >When XMAS packages are revoked or renamed, this tool ***will*** break as tickets are identified by a series of hardcoded IDs. When this happens I will update as fast as possible, but expect teething issues.
 
 ### Sheffield
