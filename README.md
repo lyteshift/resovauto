@@ -24,12 +24,14 @@ I would advise creating a shortcut to ```launch.bat``` and placing it in a conve
 
 ## Roadmap
 ### Definite
-- Counting same-day bookings
-- Full daily report automation
+- [ ] Counting daily customers
+- [ ] Summing total bar presales
+- [ ] Counting same-day bookings
+- [ ] Full daily report automation
 
 ### Potential
-- Google Sheets integration
-- Resovauto API
+- [ ] Google Sheets integration
+- [ ] Resovauto API
 
 ## Notes
 ### Quirks
