@@ -14,7 +14,7 @@ I don't know if both Leeds and Sheffield have static IPs configured, so if the t
 ### API Key Security
 Do ***NOT*** upload this key to Github. Do ***NOT*** share this key. If you believe your key to be compromised, go to https://app.resova.co.uk/settings/general/developer/apikey and click the "refresh" button.
 ### Other installation considerations
-I would advise creating a shortcut to ```launch.bat``` and placing it in a convenient location for users to access.
+I would advise creating a shortcut to ```launch.bat``` and placing it in a convenient location for users to access. One has been provided, but the link location will need to be manually edited.
 ## Features
 - Counting daily customers
 - Summing total bar presales
