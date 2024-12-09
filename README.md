@@ -4,7 +4,7 @@
 
 
 
-# resovauto
+# Resovauto
 Resovauto is a CLI utility for interacting with The Great Escape Game's Resova booking system and generating reports with minimal effort. 
 
 <div align="left">
