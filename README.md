@@ -2,12 +2,30 @@
 ## Overview
 Resovauto *currently* a terminal utility for interacting with The Great Escape Game's Resova booking system. 
 ## Installation
-No installation is needed *technically*, but I would advise creating a shortcut to ```launch.bat``` and placing it in a convenient location.
+First, you **must** create a file titled ```key.txt``` in the directory containing ```main.py``` and paste in your Resova API key to that file.
+
+To get a Resova API key, you must login to https://enterprise.resova.co.uk using an enterprise account with admin priveliges, navigate to your site, and go to https://app.resova.co.uk/settings/general/developer/apikey, generate a new key and copy it to ```key.txt```.
+
+You must also add your site's IP address to Resova on the following page: https://app.resova.co.uk/settings/general/developer/whitelisting
+
+I don't know if both Leeds and Sheffield have static IPs configured, so if the tool stops working, check this first.
+### API Key Security
+Do ***NOT*** upload this key to Github. Do ***NOT*** share this key. If you believe your key to be compromised, go to https://app.resova.co.uk/settings/general/developer/apikey and click the "refresh" button.
+### Other installation considerations
+I would advise creating a shortcut to ```launch.bat``` and placing it in a convenient location for users to access.
 ## Features
 - Counting daily customers
 - Summing total bar presales
 ## Roadmap
 - Counting same-day bookings
+## Troubleshooting
+1. Check your current IP is the same as the one listed on https://app.resova.co.uk/settings/general/developer/whitelisting
+2. Try a new API key.
+3. Check the status of Resova's booking site.
+4. Conduct the holy rite of troubleshooting, details in ```praise_the_omnissiah.md``` 
+5. Just count manually, man.
+6. Contact me through WhatsApp, if you don't have my details ask someone in the Supes group.
+
 ## Developers
 George Cash-Blackmore / georgecb05@gmail.com
 ## Required Packages
