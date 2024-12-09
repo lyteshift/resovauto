@@ -1,6 +1,13 @@
+<div align="center">
+
+<img src="images/resovauto_icon.png" height="80" />
+
+
+
 # resovauto
-## Overview
-Resovauto *currently* a terminal utility for interacting with The Great Escape Game's Resova booking system. 
+Resovauto is a CLI utility for interacting with The Great Escape Game's Resova booking system and generating reports with minimal effort. 
+
+<div align="left">
 
 ## Installation
 Before running, you **must** create a file titled ```key.txt``` in the directory containing ```main.py``` and paste in your Resova API key to that file.
