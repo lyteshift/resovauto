@@ -25,6 +25,7 @@ I would advise creating a shortcut to ```launch.bat``` and placing it in a conve
 4. Conduct the holy rite of troubleshooting, details in ```praise_the_omnissiah.md``` 
 5. Just count manually, man.
 6. Contact me through WhatsApp, if you don't have my details ask someone in the Supes group.
+7. Raise an issue on GitHub if you know how https://github.com/lyteshift/resovauto
 
 ## Developers
 George Cash-Blackmore / georgecb05@gmail.com
