@@ -25,6 +25,9 @@ today = str(datetime.datetime.today()).split()[0]
 yesterday = str(datetime.datetime.today()-datetime.timedelta(days=1)).split()[0]
 tomorrow = str(datetime.datetime.today()+datetime.timedelta(days=1)).split()[0]
 
+#COST VALUES
+item_extras_value = 4.00
+
 last_output = "None"
 
 key = open("key.txt")
@@ -85,29 +88,38 @@ def get_daily_instances(date):
 def get_presales(date):
     daily_instances = get_daily_instances(date)
     total_presales = 0
+    item_extras_total = 0.00
     for instance in track(daily_instances,"    [bold green]Calculating pre-sales...[/bold green]"):
         booking = resova("https://api.resova.co.uk/v1/availability/instance/"+instance)
-        if booking["bookable"] == False:
-            if booking["type"] != "blocked":
-                if booking["bookings"][0]["item"]["id"] != 133:
-                    #print("-----------------------------")
-                    #print("got a booking here!")
-                    #pprint.pprint(booking["bookings"][0]["quantities"])
-                    for tickets in booking["bookings"][0]["quantities"]:
-                        #if tickets["pricing_category"]["single_price"] == "22.00":
-                        #print(tickets["quantity"],"standard tickets")
-                        #if tickets["pricing_category"]["single_price"] == "18.00":
-                        #print(tickets["quantity"],"concession tickets")
-                        if tickets["pricing_category"]["single_price"] == "26.00":
-                        #print(tickets["quantity"],"tree tickets (1 presale)")
-                            total_presales += tickets["quantity"] * 1
-                        if tickets["pricing_category"]["single_price"] == "30.00":
-                            #print(tickets["quantity"],"reindeer tickets (2 presale)")
-                            total_presales += tickets["quantity"] * 2
-                        if tickets["pricing_category"]["single_price"] == "38.00":
-                            #print(tickets["quantity"],"santa tickets (4 presale)")
-                            total_presales += tickets["quantity"] * 4
-                    #print(total_presales,"total presales")
+        #print(booking["bookings"])
+        if booking["bookings"] != []:
+            if booking["bookable"] == False:
+                if booking["type"] != "blocked":
+                    if booking["bookings"][0]["item"]["id"] != 133:
+                        #print("-----------------------------")
+                        #print("got a booking here!")
+                        #pprint.pprint(booking["bookings"][0]["quantities"])
+                        for tickets in booking["bookings"][0]["quantities"]:
+                            #if tickets["pricing_category"]["single_price"] == "22.00":
+                            #print(tickets["quantity"],"standard tickets")
+                            #if tickets["pricing_category"]["single_price"] == "18.00":
+                            #print(tickets["quantity"],"concession tickets")
+                            if tickets["pricing_category"]["single_price"] == "26.00":
+                            #print(tickets["quantity"],"tree tickets (1 presale)")
+                                total_presales += tickets["quantity"] * 1
+                            if tickets["pricing_category"]["single_price"] == "30.00":
+                                #print(tickets["quantity"],"reindeer tickets (2 presale)")
+                                total_presales += tickets["quantity"] * 2
+                            if tickets["pricing_category"]["single_price"] == "38.00":
+                                #print(tickets["quantity"],"santa tickets (4 presale)")
+                                total_presales += tickets["quantity"] * 4
+                        extras = booking["bookings"][0]["extras"]
+                        try: 
+                            item_extras_total += float(extras[0]["total"])
+                        except:
+                            pass
+                #item_extras_total += float(booking["bookings"][0]["extras_total"])
+    total_presales += (item_extras_total/item_extras_value)
     return total_presales
         
 def main():
@@ -148,7 +160,6 @@ def main():
                 if input("Continue? [y/n]? ") == "n":
                     break
             except:
-                
                 cls()
                 print(title)
                 print("\nERROR! Maybe you typed the date wrong?")
