@@ -175,7 +175,9 @@ def main():
                 
                 cls()
                 print(title)
-                print("\n",get_presales(date),"total presales on",date)
+                presales =get_presales(date)
+                print("\n",presales,"total presale drinks on",date)
+                print("£",presales*4.00,"total value @ £4.00/token")
                 if input("Continue? [y/n]? ") == "n":
                     break
             except:

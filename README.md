@@ -2,7 +2,9 @@
 ## Overview
 Resovauto *currently* a terminal utility for interacting with The Great Escape Game's Resova booking system. 
 ## Installation
-First, you **must** create a file titled ```key.txt``` in the directory containing ```main.py``` and paste in your Resova API key to that file.
+Before running, you **must** create a file titled ```key.txt``` in the directory containing ```main.py``` and paste in your Resova API key to that file.
+
+```launch.bat``` helpfully installs Python to the system if not already installed, and will create a venv and acquire all the packages it needs automagically. To reinstall, delete both the folder ```.venv``` and ```praise_the_omnissiah.md```
 
 To get a Resova API key, you must login to https://enterprise.resova.co.uk using an enterprise account with admin priveliges, navigate to your site, and go to https://app.resova.co.uk/settings/general/developer/apikey, generate a new key and copy it to ```key.txt```.
 
