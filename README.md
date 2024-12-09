@@ -14,13 +14,13 @@ Before running, you **must** create a file titled ```key.txt``` in the directory
 
 ```launch.bat``` helpfully installs Python to the system if not already installed, and will create a venv and acquire all the packages it needs automagically. To reinstall, delete both the folder ```.venv``` and ```praise_the_omnissiah.md```
 
-To get a Resova API key, you must login to https://enterprise.resova.co.uk using an enterprise account with admin priveliges, navigate to your site, and go to https://app.resova.co.uk/settings/general/developer/apikey, generate a new key and copy it to ```key.txt```.
+To get a Resova API key, you must login to [Resova](https://enterprise.resova.co.uk) using an enterprise account with admin priveliges, navigate to your site, and go to [API keys](https://app.resova.co.uk/settings/general/developer/apikey), generate a new key and copy it to ```key.txt```.
 
-You must also add your site's IP address to Resova on the following page: https://app.resova.co.uk/settings/general/developer/whitelisting
+You must also add your site's IP address to Resova on the [whitelist page](https://app.resova.co.uk/settings/general/developer/whitelisting).
 I don't know if both Leeds and Sheffield have static IPs configured, so if the tool stops working, check this first.
 
 ### API Key Security
-Do ***NOT*** upload this key to Github. Do ***NOT*** share this key. If you believe your key to be compromised, go to https://app.resova.co.uk/settings/general/developer/apikey and click the "refresh" button.
+Do ***NOT*** upload this key to Github. Do ***NOT*** share this key. If you believe your key to be compromised, go to [Resova API keys](https://app.resova.co.uk/settings/general/developer/apikey) and click the "refresh" button.
 
 ### Other installation considerations
 I would advise creating a shortcut to ```launch.bat``` and placing it in a convenient location for users to access. One has been provided, but the link location will need to be manually edited.
@@ -55,7 +55,7 @@ When XMAS packages are revoked and renamed, this tool ***will*** break as ticket
 This should *theoretically* work for Sheffield and GSAS, but lack of proximity to Sheffield makes it not worthwhile to deploy this there until it's *way* more robust and feature complete. 
 
 ## Troubleshooting
-1. Check your current IP is the same as the one listed on https://app.resova.co.uk/settings/general/developer/whitelisting
+1. Check your current IP is the same as the one listed on [Resova](https://app.resova.co.uk/settings/general/developer/whitelisting).
 2. Try a new API key.
 3. Check the status of Resova's booking site.
 4. Conduct the holy rite of troubleshooting, details in ```praise_the_omnissiah.md``` 
