@@ -27,6 +27,9 @@ I would advise creating a shortcut to ```launch.bat``` and placing it in a conve
 6. Contact me through WhatsApp, if you don't have my details ask someone in the Supes group.
 7. Raise an issue on GitHub if you know how https://github.com/lyteshift/resovauto
 
+## Contributing
+If you wish to contribute to the main repo, you'll need a private SSH key. Contact George for information.
+
 ## Developers
 George Cash-Blackmore / georgecb05@gmail.com
 ## Required Packages

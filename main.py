@@ -9,9 +9,9 @@ title = """[bold orange1]
        ___  __   ___  __      __   ___  __   __                 ___  __  
         |  / _` |__  / _`    |__) |__  /__` /  \ \  /  /\  |  |  |  /  \ 
         |  \__> |___ \__>    |  \ |___ .__/ \__/  \/  /  \ \__/  |  \__/ 
-[/bold orange1][magenta]
+[/bold orange1][bold]
                         Written by George Cash-Blackmore
-                           Open to feature requests[/magenta][red bold] <3[/red bold]
+                           Open to feature requests[/bold][red bold] <3[/red bold]
 """
 
 # // RESOVAUTO
