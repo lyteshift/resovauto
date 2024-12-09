@@ -1,13 +1,7 @@
-<div align="center">
-
-<img src="images/resovauto_icon.png" height="80" />
-
-
+![logo](images/resovauto_icon.png)
 
 # Resovauto
 Resovauto is a CLI utility for interacting with The Great Escape Game's Resova booking system and generating reports with minimal effort. 
-
-<div align="left">
 
 ## Installation
 Before running, you **must** create a file titled ```key.txt``` in the directory containing ```main.py``` and paste in your Resova API key to that file.
@@ -19,8 +13,10 @@ To get a Resova API key, you must login to [Resova](https://enterprise.resova.co
 You must also add your site's IP address to Resova on the [whitelist page](https://app.resova.co.uk/settings/general/developer/whitelisting).
 I don't know if both Leeds and Sheffield have static IPs configured, so if the tool stops working, check this first.
 
->[!WARNING]
->Do ***NOT*** upload this key to Github. Do ***NOT*** share this key. If you believe your key to be compromised, go to [Resova API keys](https://app.resova.co.uk/settings/general/developer/apikey) and click the "refresh" button.
+> [!CAUTION]
+> Negative potential consequences of an action.
+
+Do ***NOT*** upload this key to Github. Do ***NOT*** share this key. If you believe your key to be compromised, go to [Resova API keys](https://app.resova.co.uk/settings/general/developer/apikey) and click the "refresh" button.
 
 ### Other installation considerations
 I would advise creating a shortcut to ```launch.bat``` and placing it in a convenient location for users to access. One has been provided, but the link location will need to be manually edited.
