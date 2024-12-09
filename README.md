@@ -24,8 +24,8 @@ I would advise creating a shortcut to ```launch.bat``` and placing it in a conve
 
 ## Roadmap
 ### Definite
-- [ ] Counting daily customers
-- [ ] Summing total bar presales
+- [x] Counting daily customers
+- [x] Summing total bar presales
 - [ ] Counting same-day bookings
 - [ ] Full daily report automation
 
