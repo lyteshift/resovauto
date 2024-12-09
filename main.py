@@ -29,10 +29,14 @@ tomorrow = str(datetime.datetime.today()+datetime.timedelta(days=1)).split()[0]
 
 last_output = "None"
 
+key = open("key.txt")
+
 headers = {
     "accept": "application/json",
-    "X-API-KEY": "yNkdOIZtkMdfKR24xIMP6ZbpMv049a125lhxQL57O8wG2v07GGknrw9q70mn9H"
+    "X-API-KEY": str(key.read())
 }
+
+key.close()
 
 def cls(): # Terminal clear function taken from StackOverflow lol
     os.system('cls' if os.name=='nt' else 'clear')
