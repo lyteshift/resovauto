@@ -5,12 +5,12 @@ from rich import print
 from rich.progress import track
 import os
 
-title = """[bold orange1]
-       ___  __   ___  __      __   ___  __   __                 ___  __  
-        |  / _` |__  / _`    |__) |__  /__` /  \ \  /  /\  |  |  |  /  \ 
-        |  \__> |___ \__>    |  \ |___ .__/ \__/  \/  /  \ \__/  |  \__/ 
-[/bold orange1][bold]       Written by George Cash-Blackmore     [bold blue]v1.0.0-alpha.2 "King Arthur"[/bold blue]
-"""
+title = """                                                          [bold blue]/[/bold blue]   
+[bold white]           ___  __   ___  __  [/bold white][bold blue][bold blue]    __   ___  __   __      /[/bold blue][bold red]          ___  __  [/bold red]
+[bold white]            |  / _` |__  / _` [/bold white][bold blue][bold blue]   |__) |__  /__` /  \ \  / [/bold blue][bold red] /\  |  |  |  /  \ [/bold red]
+[bold white]            |  \__> |___ \__> [/bold white][bold blue][bold blue]   |  \ |___ .__/ \__/  \/  [/bold blue][bold red]/  \ \__/  |  \__/ [/bold red]
+[bold white]           Written by George Cash-Blackmore[/bold white]    [bold red]v1.0.0-alpha.3 "Chlorophytum"[/bold red]
+                                                        [bold red]/[/bold red]"""
 
 # // RESOVAUTO
 # Written by George Cash-Blackmore
@@ -126,13 +126,9 @@ def main():
     while True:
         cls()
         print(title)
-        print("[bold magenta]Welcome to the Resovauto CLI[/bold magenta]")
-        if last_output != "None":
-            print("Previous output:",last_output)
-        print("""
-    [orange1]Choose an option from below to begin...[/orange1]
-    [1] Daily customers (exc. RA/ID) [2] Daily presales
-    [red][0] Exit (ctrl+c)[/red]
+        print("[bold blue]   Welcome to the Resovauto CLI[/bold blue]")
+        print("""   [orange1]Choose an option from below to begin...[/orange1]
+   [1] Daily customers (exc. RA/ID)  [2] Daily presales  [red][0] Exit (ctrl+c)[/red]
             """)
         userinput = input(": ")
         if userinput == "0":
@@ -140,10 +136,9 @@ def main():
         if userinput == "1":
             cls()
             print(title)
-            print("For which day? ")
-            print("""
-    [orange1]Choose an option from below...[/orange1]
-    \[today] \[yesterday] \[YYYY-MM-DD]
+            print("[bold white]   For which day?[/bold white]")
+            print("""   [orange1]Choose an option from below...[/orange1]
+   \[today] \[yesterday] \[YYYY-MM-DD]
                   """)
             date = input(": ")
             print("")
@@ -162,17 +157,16 @@ def main():
             except:
                 cls()
                 print(title)
-                print("\nERROR! Maybe you typed the date wrong?")
+                print("\n[red]ERROR! Maybe you typed the date wrong?[/red]")
                 if input("Try again? [y/n]? ") == "n":
                     break
         if userinput == "2":
             
             cls()
             print(title)
-            print("For which day? ")
-            print("""
-    [orange1]Choose an option from below...[/orange1]
-    \[today] \[yesterday] \[YYYY-MM-DD]
+            print("[bold white]   For which day?[/bold white]")
+            print("""   [orange1]Choose an option from below...[/orange1]
+   \[today] \[yesterday] \[YYYY-MM-DD]
                   """)
             date = input(": ")
             print("")
@@ -185,7 +179,7 @@ def main():
                 cls()
                 print(title)
                 presales =get_presales(date)
-                print("\n",presales,"total presale drinks on",date)
+                print("\n",presales," total presale drinks on",date)
                 print("£",presales*4.00,"total value @ £4.00/token")
                 if input("Continue? [y/n]? ") == "n":
                     break
@@ -193,7 +187,7 @@ def main():
                 
                 cls()
                 print(title)
-                print("\nERROR! Maybe you typed the date wrong?")
+                print("\n[red]ERROR! Maybe you typed the date wrong?[/red]")
                 if input("Try again? [y/n]? ") == "n":
                     break
 
