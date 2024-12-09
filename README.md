@@ -19,7 +19,7 @@ To get a Resova API key, you must login to [Resova](https://enterprise.resova.co
 You must also add your site's IP address to Resova on the [whitelist page](https://app.resova.co.uk/settings/general/developer/whitelisting).
 I don't know if both Leeds and Sheffield have static IPs configured, so if the tool stops working, check this first.
 
-> [!CAUTION]
+> [!CAUTION]   
 > Do ***NOT*** upload this key to Github. Do ***NOT*** share this key. If you believe your key to be compromised, go to [Resova API keys](https://app.resova.co.uk/settings/general/developer/apikey) and click the "refresh" button.
 
 ### Other installation considerations
