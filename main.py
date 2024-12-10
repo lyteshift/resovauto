@@ -38,24 +38,21 @@ cocktails = 118
 
 active_rooms = [king_arthur,underworld,nhih,cgl,abd,subs1,subs2]
 
-# DATE SETTERS
+# Date Setters
 today = str(datetime.datetime.today()).split()[0]
 yesterday = str(datetime.datetime.today()-datetime.timedelta(days=1)).split()[0]
 tomorrow = str(datetime.datetime.today()+datetime.timedelta(days=1)).split()[0]
 
-#COST VALUES
+#Cost Values
 item_extras_value = 4.00
 
-
-api_calls = 1
+api_calls = 0
 
 key = open("key.txt")
-
 headers = {
     "accept": "application/json",
     "X-API-KEY": str(key.read())
 }
-
 key.close()
 
 def cls(): # Terminal clear function taken from StackOverflow lol
@@ -75,7 +72,8 @@ def get_rooms():
     room_list = []
 
     for rooms in response["data"]:
-        room_list.append(rooms["id"])
+        if rooms["id"] in active_rooms:
+            room_list.append(rooms["id"])
 
     return room_list
 
@@ -86,7 +84,8 @@ def get_rooms_verbose():
     room_list = []
 
     for rooms in response["data"]:
-        room_list.append([rooms["id"],rooms["name"]])
+        if rooms["id"] in active_rooms:
+            room_list.append([rooms["id"],rooms["name"]])
         
     return room_list
 
@@ -97,10 +96,20 @@ def count_daily_customers(date):
         avail_req = "https://api.resova.co.uk/v1/availability/calendar?start_date="+date+"&end_date="+date+"&item_ids="+str(rooms)
 
         for instances in resova(avail_req)["data"][date]["items"]:
-            #pprint.pprint(instances)
             if instances["item_id"] != 133:
                 for availability in instances["instances"]:
-                    #print(availability["availability"]["spaces"]["booked"], availability["booking_customer"])
+                   count += availability["availability"]["spaces"]["booked"]
+
+    return(count)
+
+def count_daily_customers_fast(date):
+    count = 0
+    all_rooms = get_rooms()
+    avail_req = "https://api.resova.co.uk/v1/availability/calendar?start_date="+date+"&end_date="+date+"&item_ids="
+    print(avail_req)
+    for instances in resova(avail_req)["data"][date]["items"]:
+            if instances["item_id"] != 133:
+                for availability in instances["instances"]:
                    count += availability["availability"]["spaces"]["booked"]
 
     return(count)
@@ -194,11 +203,11 @@ def main():
                 cls()
                 print(title)
                 print("")
-                print(count_daily_customers(date),"customers visited on",date)
+                print(count_daily_customers_fast(date),"customers visited on",date)
                 if input("Continue? [y/n]? ") == "n":
                     break
             except:
-                cls()
+                #cls()
                 print(title)
                 print("\n[red]ERROR! Maybe you typed the date wrong?[/red]")
                 if input("Try again? [y/n]? ") == "n":
