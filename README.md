@@ -24,12 +24,13 @@ I would advise creating a shortcut to ```launch.bat``` and placing it in a conve
 ## Features
 - Counting daily customers
 - Summing total bar presales
+- Counting same-day bookings
 
 ## Roadmap
 ### Definite
 - [x] Counting daily customers
 - [x] Summing total bar presales
-- [ ] Counting same-day bookings
+- [x] Counting same-day bookings
 - [ ] Full daily report automation
 
 ### Potential
@@ -41,7 +42,7 @@ I would advise creating a shortcut to ```launch.bat``` and placing it in a conve
 #### Item Extras
 As of ```v1.0.0-alpha.2```, Resovauto calculates bar pre-sales by first counting tickets with pre-sales, and then calculating the total "item extras" added onto each booking. 
 
-Specific item extras aren't exposed to the API in a nice way, so Resovauto just pulls the total item extra value in £GBP, and divides by a constant (£4.00). If any item extras are purchases that aren't divisible by this constant (eg. ABD full exp.) then the output may be inaccurate. 
+Specific item extras aren't exposed to the API in a nice way, so Resovauto just pulls the total item extra value in £GBP, and divides by a constant (£4.00). If any item extras are purchases that aren't divisible by this constant (eg. ABD full exp. or VE bookings) then the output may be inaccurate. 
 
 Since ABD full exp. has been mostly removed now, I don't foresee much issue, but if it poses a problem the fix *is* possible, just difficult.
 >[!IMPORTANT]
