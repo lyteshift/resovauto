@@ -36,8 +36,8 @@ meeting_per_hour = 107
 meeting_per_person = 109
 cocktails = 118
 
-active_rooms = [king_arthur,underworld]
-#active_rooms = [king_arthur,underworld,nhih,cgl,abd,subs1,subs2]
+active_rooms = [king_arthur,underworld,nhih,cgl,abd,subs1,subs2]
+
 # Date Setters
 today = str(datetime.datetime.today()).split()[0]
 yesterday = str(datetime.datetime.today()-datetime.timedelta(days=1)).split()[0]
