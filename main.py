@@ -36,8 +36,8 @@ meeting_per_hour = 107
 meeting_per_person = 109
 cocktails = 118
 
-active_rooms = [king_arthur,underworld,nhih,cgl,abd,subs1,subs2]
-
+active_rooms = [king_arthur,underworld]
+#active_rooms = [king_arthur,underworld,nhih,cgl,abd,subs1,subs2]
 # Date Setters
 today = str(datetime.datetime.today()).split()[0]
 yesterday = str(datetime.datetime.today()-datetime.timedelta(days=1)).split()[0]
@@ -96,18 +96,6 @@ def count_daily_customers(date):
         avail_req = "https://api.resova.co.uk/v1/availability/calendar?start_date="+date+"&end_date="+date+"&item_ids="+str(rooms)
 
         for instances in resova(avail_req)["data"][date]["items"]:
-            if instances["item_id"] != 133:
-                for availability in instances["instances"]:
-                   count += availability["availability"]["spaces"]["booked"]
-
-    return(count)
-
-def count_daily_customers_fast(date):
-    count = 0
-    all_rooms = get_rooms()
-    avail_req = "https://api.resova.co.uk/v1/availability/calendar?start_date="+date+"&end_date="+date+"&item_ids="
-    print(avail_req)
-    for instances in resova(avail_req)["data"][date]["items"]:
             if instances["item_id"] != 133:
                 for availability in instances["instances"]:
                    count += availability["availability"]["spaces"]["booked"]
