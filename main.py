@@ -191,7 +191,7 @@ def main():
                 cls()
                 print(title)
                 print("")
-                print(count_daily_customers_fast(date),"customers visited on",date)
+                print(count_daily_customers(date),"customers visited on",date)
                 if input("Continue? [y/n]? ") == "n":
                     break
             except:
