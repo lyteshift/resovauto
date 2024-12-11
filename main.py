@@ -24,12 +24,12 @@ subs1 = 27
 nhih = 29
 abd = 87
 subs2 = 89
-raid60_id = 133
+raid60 = 133
 cgl = 136
 
 # // Deprecated Room IDs
 haunted = 105
-raid45_id = 127
+raid45 = 127
 
 # // Other IDs
 meeting_per_hour = 107
@@ -98,10 +98,20 @@ def count_daily_customers(date):
         avail_req = "https://api.resova.co.uk/v1/availability/calendar?start_date="+date+"&end_date="+date+"&item_ids="+str(rooms)
 
         for instances in resova(avail_req)["data"][date]["items"]:
-            if instances["item_id"] != 133:
+            if instances["item_id"] != raid60:
                 for availability in instances["instances"]:
                    count += availability["availability"]["spaces"]["booked"]
 
+    return(count)
+
+def get_availability(date):
+    count = 0
+    for rooms in track(get_rooms(),"    [bold sea_green2]Getting booking data...[/bold sea_green2] "):
+
+        avail_req = "https://api.resova.co.uk/v1/availability/calendar?start_date="+date+"&end_date="+date+"&item_ids="+str(rooms)
+        for items in resova(avail_req)["data"][date]["items"]:
+            for instances in items["instances"]:
+                count += 1
     return(count)
 
 def get_daily_instances(date):
@@ -128,7 +138,7 @@ def get_presales(date):
         if booking["bookings"] != []:
             if booking["bookable"] == False:
                 if booking["type"] != "blocked":
-                    if booking["bookings"][0]["item"]["id"] != 133:
+                    if booking["bookings"][0]["item"]["id"] != raid60:
                         for tickets in booking["bookings"][0]["quantities"]:
                             if tickets["pricing_category"]["single_price"] == "26.00":
                                 total_presales += tickets["quantity"] * 1
@@ -157,7 +167,7 @@ def get_same_day(date):
         if booking["bookings"] != []:
             if booking["bookable"] == False:
                 if booking["type"] != "blocked":
-                    if booking["bookings"][0]["item"]["id"] != 133:
+                    if booking["bookings"][0]["item"]["id"] != raid60:
                         if booking["bookings"][0]["transaction"]["formatted"]["created_d_string"] == date:
                             count += 1
     return count
@@ -189,7 +199,7 @@ def main():
         print(title)
         print("""   [orange1][/orange1][bold black on orange1]Choose an option from below to begin...[/bold black on orange1][orange1][/orange1]
               
-   [1] Daily customers (exc. RA/ID)  [2] Daily presales  [3] Same-day bookings 
+   [1] Daily customers (exc. RA/ID)  [2] Daily presales  [3] Same-day bookings [4] Availability
    [deep_pink2][0] Exit (ctrl+c)[/deep_pink2]  [bold sea_green2]\[help][/bold sea_green2]
             """)
         
@@ -284,6 +294,34 @@ def main():
                 print("\n[deep_pink2]ERROR! Maybe you typed the date wrong?[/deep_pink2]")
                 if input("Try again? [y/n]? ") == "n":
                     break
+        if userinput == "4":
+            cls()
+            print(title)
+            print("""   [orange1][/orange1][bold black on orange1]For which day?[/bold black on orange1][orange1][/orange1]
+   \[[bold deep_sky_blue1]t[/bold deep_sky_blue1]oday] \[[bold deep_sky_blue1]y[/bold deep_sky_blue1]esterday] \[YYYY-MM-DD]
+                  """)
+            date = input(": ")
+            print("")
+            if date == "today" or date == "t":
+                date = today
+            if date == "yesterday" or date ==  "y":
+                date = yesterday
+            try:
+                
+                cls()
+                print(title)
+                availability = get_availability(date)
+                print(availability,"rooms booked on",date)
+                set_last_output(availability,"rooms booked on",date)
+                if input("Continue? [y/n]? ") == "n":
+                    break
+            except:
+                
+                cls()
+                print(title)
+                print("\n[deep_pink2]ERROR! Maybe you typed the date wrong?[/deep_pink2]")
+                if input("Try again? [y/n]? ") == "n":
+                    break
         if userinput == "debug":
             cls()
             print(title)
@@ -301,7 +339,8 @@ def main():
                 print("   Holding for input...")
             if debuginput == "calls":
                 print(api_calls,"api calls since start.")
-
+            if debuginput == "av_test":
+                print(get_availability(today))
             if input(": "):
                 pass
         if userinput == "help":
