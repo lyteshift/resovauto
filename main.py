@@ -104,14 +104,18 @@ def count_daily_customers(date):
 
     return(count)
 
-def get_availability(date):
+def get_capacity(date):
     count = 0
-    for rooms in track(get_rooms(),"    [bold sea_green2]Getting booking data...[/bold sea_green2] "):
+    for rooms in track(get_rooms(),"    [bold sea_green2]Getting daily customers...[/bold sea_green2]"):
 
         avail_req = "https://api.resova.co.uk/v1/availability/calendar?start_date="+date+"&end_date="+date+"&item_ids="+str(rooms)
-        for items in resova(avail_req)["data"][date]["items"]:
-            for instances in items["instances"]:
-                count += 1
+
+        for instances in resova(avail_req)["data"][date]["items"]:
+            if instances["item_id"] != raid60:
+                for availability in instances["instances"]:
+                   if availability["availability"]["spaces"]["booked"] > 0:
+                       count += 1
+
     return(count)
 
 def get_daily_instances(date):
@@ -199,7 +203,7 @@ def main():
         print(title)
         print("""   [orange1][/orange1][bold black on orange1]Choose an option from below to begin...[/bold black on orange1][orange1][/orange1]
               
-   [1] Daily customers (exc. RA/ID)  [2] Daily presales  [3] Same-day bookings [4] Availability
+   [1] Daily customers (exc. RA/ID)  [2] Daily presales  [3] Same-day bookings [4] Capacity
    [deep_pink2][0] Exit (ctrl+c)[/deep_pink2]  [bold sea_green2]\[help][/bold sea_green2]
             """)
         
@@ -310,7 +314,7 @@ def main():
                 
                 cls()
                 print(title)
-                availability = get_availability(date)
+                availability = get_capacity(date)
                 print(availability,"rooms booked on",date)
                 set_last_output(availability,"rooms booked on",date)
                 if input("Continue? [y/n]? ") == "n":
@@ -340,7 +344,7 @@ def main():
             if debuginput == "calls":
                 print(api_calls,"api calls since start.")
             if debuginput == "av_test":
-                print(get_availability(today))
+                print(get_capacity(today))
             if input(": "):
                 pass
         if userinput == "help":

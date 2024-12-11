@@ -23,6 +23,7 @@ I would advise creating a shortcut to ```launch.bat``` and placing it in a conve
 - Counting daily customers
 - Summing total bar presales
 - Counting same-day bookings
+- Capacity (total timeslots booked)
 
 ## Roadmap
 ### Definite
@@ -30,7 +31,7 @@ I would advise creating a shortcut to ```launch.bat``` and placing it in a conve
 - [x] Summing total bar presales
 - [x] Counting same-day bookings
 - [ ] Full daily report automation
-- [ ] Capacity (total timeslots booked)
+- [x] Capacity (total timeslots booked)
 
 ### Potential
 - [ ] Google Sheets integration
