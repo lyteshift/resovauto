@@ -9,7 +9,7 @@ title = """                                                          [bold deep_
 [bold white]           ___  __   ___  __  [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]    __   ___  __   __      /[/bold deep_sky_blue1][bold deep_pink2]          ___  __  [/bold deep_pink2]
 [bold white]            |  / _` |__  / _` [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |__) |__  /__` /  \ \  / [/bold deep_sky_blue1][bold deep_pink2] /\  |  |  |  /  \ [/bold deep_pink2]
 [bold white]            |  \__> |___ \__> [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |  \ |___ .__/ \__/  \/  [/bold deep_sky_blue1][bold deep_pink2]/  \ \__/  |  \__/ [/bold deep_pink2]
-[bold white]           Written by George Cash-Blackmore[/bold white]        [bold deep_pink2]v1.0.0-beta.1 "Strelizia"[/bold deep_pink2]
+[bold white]           Written by George Cash-Blackmore[/bold white]        [bold deep_pink2]v1.1.0 "Strelizia"[/bold deep_pink2]
                                                         [bold deep_pink2]/[/bold deep_pink2]"""
 
 # // RESOVAUTO
