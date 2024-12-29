@@ -5,11 +5,11 @@ from rich import print
 from rich.progress import track
 import os
 
-title = """                                                          [bold deep_sky_blue1]/[/bold deep_sky_blue1]   
-[bold white]           ___  __   ___  __  [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]    __   ___  __   __      /[/bold deep_sky_blue1][bold deep_pink2]          ___  __  [/bold deep_pink2]
-[bold white]            |  / _` |__  / _` [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |__) |__  /__` /  \ \  / [/bold deep_sky_blue1][bold deep_pink2] /\  |  |  |  /  \ [/bold deep_pink2]
-[bold white]            |  \__> |___ \__> [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |  \ |___ .__/ \__/  \/  [/bold deep_sky_blue1][bold deep_pink2]/  \ \__/  |  \__/ [/bold deep_pink2]
-[bold white]           Written by George Cash-Blackmore[/bold white]        [bold deep_pink2]v1.1.0 "Strelizia"[/bold deep_pink2]
+title = """                                                      [bold deep_sky_blue1]/[/bold deep_sky_blue1]   
+[bold white]       ___  __   ___  __  [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]    __   ___  __   __      /[/bold deep_sky_blue1][bold deep_pink2]          ___  __  [/bold deep_pink2]
+[bold white]        |  / _` |__  / _` [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |__) |__  /__` /  \ \  / [/bold deep_sky_blue1][bold deep_pink2] /\  |  |  |  /  \ [/bold deep_pink2]
+[bold white]        |  \__> |___ \__> [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |  \ |___ .__/ \__/  \/  [/bold deep_sky_blue1][bold deep_pink2]/  \ \__/  |  \__/ [/bold deep_pink2]
+[bold white]       Written by George Cash-Blackmore[/bold white]        [bold deep_pink2]v1.1.0 "Strelizia"[/bold deep_pink2]
                                                         [bold deep_pink2]/[/bold deep_pink2]"""
 
 # // RESOVAUTO
@@ -106,7 +106,7 @@ def count_daily_customers(date):
 
 def get_capacity(date):
     count = 0
-    for rooms in track(get_rooms(),"    [bold sea_green2]Getting daily customers...[/bold sea_green2]"):
+    for rooms in track(get_rooms(),"    [bold sea_green2]Counting bookings...[/bold sea_green2]"):
 
         avail_req = "https://api.resova.co.uk/v1/availability/calendar?start_date="+date+"&end_date="+date+"&item_ids="+str(rooms)
 
@@ -143,6 +143,7 @@ def get_presales(date):
             if booking["bookable"] == False:
                 if booking["type"] != "blocked":
                     if booking["bookings"][0]["item"]["id"] != raid60:
+                        print()
                         for tickets in booking["bookings"][0]["quantities"]:
                             if tickets["pricing_category"]["single_price"] == "26.00":
                                 total_presales += tickets["quantity"] * 1
@@ -203,8 +204,8 @@ def main():
         print(title)
         print("""   [orange1][/orange1][bold black on orange1]Choose an option from below to begin...[/bold black on orange1][orange1][/orange1]
               
-   [1] Daily customers (exc. RA/ID)  [2] Daily presales  [3] Same-day bookings [4] Capacity
-   [deep_pink2][0] Exit (ctrl+c)[/deep_pink2]  [bold sea_green2]\[help][/bold sea_green2]
+   [1] Customers    [2] Presales    [3] Same-day    [4] Capacity
+   [bold sea_green2]\[help][/bold sea_green2] [deep_pink2][0] Exit (ctrl+c)[/deep_pink2]  
             """)
         
         global just_launched
