@@ -9,7 +9,7 @@ title = """                                                      [bold deep_sky_
 [bold white]       ___  __   ___  __  [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]    __   ___  __   __      /[/bold deep_sky_blue1][bold deep_pink2]          ___  __  [/bold deep_pink2]
 [bold white]        |  / _` |__  / _` [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |__) |__  /__` /  \ \  / [/bold deep_sky_blue1][bold deep_pink2] /\  |  |  |  /  \ [/bold deep_pink2]
 [bold white]        |  \__> |___ \__> [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |  \ |___ .__/ \__/  \/  [/bold deep_sky_blue1][bold deep_pink2]/  \ \__/  |  \__/ [/bold deep_pink2]
-[bold white]                                       [/bold white]        [bold deep_pink2]v1.2.0 "Strelizia Apath"[/bold deep_pink2]
+[bold white]                                       [/bold white]        [bold deep_pink2]v1.3.1 "Strelizia Apath"[/bold deep_pink2]
                                                     [bold deep_pink2]/[/bold deep_pink2]"""
 
 # // RESOVAUTO
