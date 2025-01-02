@@ -282,7 +282,7 @@ def main():
         print(title)
         print("""   [orange1][/orange1][bold black on orange1]Choose an option from below to begin...[/bold black on orange1][orange1][/orange1]
               
-   [1] Customers    [2] Presales    [3] Same-day    [4] Capacity    [5] All Metrics
+   [1] Customers    [2] Presales    [3] Same-day    [4] Capacity    [5] Full Report
    [bold sea_green2]\[help][/bold sea_green2] [deep_pink2][0] Exit (ctrl+c)[/deep_pink2]  
             """)
         
@@ -434,7 +434,7 @@ def main():
                     print(f"£{metrics['presales']*4.00} total presales value on {date}")
                     print(f"{metrics['same_day']} same day bookings on {date}")
                     print(f"{metrics['availability']} rooms booked on {date}")
-                    set_last_output("All metrics", "retrieved for", date)
+                    set_last_output("Full report", "retrieved for", date)
                 if input("Continue? [y/n]? ") == "n":
                     break
             except:
