@@ -259,13 +259,30 @@ def print_footer():
     print("""   [deep_sky_blue1][/deep_sky_blue1][bold white on deep_sky_blue1] {last_output} [/bold white on deep_sky_blue1][deep_pink2 on deep_sky_blue1][/deep_pink2 on deep_sky_blue1][bold white on deep_pink2] {msg} {date} [/bold white on deep_pink2][deep_pink2][/deep_pink2]
 """.format(last_output=last_output,msg=last_output_msg,date=last_output_date))
 
+def get_all_metrics(date, time=None):
+    try:
+        total_customers = count_daily_customers(date)
+        presales = get_presales(date)
+        same_day = get_same_day_v2(date, time) if time else get_same_day(date)
+        availability = get_capacity(date)
+        
+        return {
+            "total_customers": total_customers,
+            "presales": presales,
+            "same_day": same_day,
+            "availability": availability
+        }
+    except Exception as e:
+        print(f"\n[deep_pink2]ERROR! {str(e)}[/deep_pink2]")
+        return None
+
 def main():
     while True:
         cls()
         print(title)
         print("""   [orange1][/orange1][bold black on orange1]Choose an option from below to begin...[/bold black on orange1][orange1][/orange1]
               
-   [1] Customers    [2] Presales    [3] Same-day    [4] Capacity
+   [1] Customers    [2] Presales    [3] Same-day    [4] Capacity    [5] All Metrics
    [bold sea_green2]\[help][/bold sea_green2] [deep_pink2][0] Exit (ctrl+c)[/deep_pink2]  
             """)
         
@@ -387,6 +404,40 @@ def main():
                     break
             except:
                 
+                cls()
+                print(title)
+                print("\n[deep_pink2]ERROR! Maybe you typed the date wrong?[/deep_pink2]")
+                if input("Try again? [y/n]? ") == "n":
+                    break
+        if userinput == "5":
+            cls()
+            print(title)
+            print("""   [orange1][/orange1][bold black on orange1]For which day?[/bold black on orange1][orange1][/orange1]
+   \[[bold deep_sky_blue1]t[/bold deep_sky_blue1]oday] \[[bold deep_sky_blue1]y[/bold deep_sky_blue1]esterday] \[YYYY-MM-DD]
+                  """)
+            date = input(": ")
+            print("")
+            if date == "today" or date == "t":
+                date = today
+            if date == "yesterday" or date ==  "y":
+                date = yesterday
+            print("   [orange1][/orange1][bold black on orange1]When were start times sent? (optional)[/bold black on orange1][orange1][/orange1]")
+            print("   [HH:MM][am/pm] eg. 5:10pm")
+            print("")
+            time = input(": ")
+            try:
+                cls()
+                print(title)
+                metrics = get_all_metrics(date, time)
+                if metrics:
+                    print(f"{metrics['total_customers']} customers visited on {date}")
+                    print(f"£{metrics['presales']*4.00} total presales value on {date}")
+                    print(f"{metrics['same_day']} same day bookings on {date}")
+                    print(f"{metrics['availability']} rooms booked on {date}")
+                    set_last_output("All metrics", "retrieved for", date)
+                if input("Continue? [y/n]? ") == "n":
+                    break
+            except:
                 cls()
                 print(title)
                 print("\n[deep_pink2]ERROR! Maybe you typed the date wrong?[/deep_pink2]")
