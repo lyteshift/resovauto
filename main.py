@@ -5,12 +5,12 @@ from rich import print
 from rich.progress import track
 import os
 
-title = """                                                          [bold deep_sky_blue1]/[/bold deep_sky_blue1]   
-[bold white]           ___  __   ___  __  [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]    __   ___  __   __      /[/bold deep_sky_blue1][bold deep_pink2]          ___  __  [/bold deep_pink2]
-[bold white]            |  / _` |__  / _` [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |__) |__  /__` /  \ \  / [/bold deep_sky_blue1][bold deep_pink2] /\  |  |  |  /  \ [/bold deep_pink2]
-[bold white]            |  \__> |___ \__> [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |  \ |___ .__/ \__/  \/  [/bold deep_sky_blue1][bold deep_pink2]/  \ \__/  |  \__/ [/bold deep_pink2]
-[bold white]           Written by George Cash-Blackmore[/bold white]        [bold deep_pink2]v1.1.0 "Strelizia"[/bold deep_pink2]
-                                                        [bold deep_pink2]/[/bold deep_pink2]"""
+title = """                                                      [bold deep_sky_blue1]/[/bold deep_sky_blue1]   
+[bold white]       ___  __   ___  __  [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]    __   ___  __   __      /[/bold deep_sky_blue1][bold deep_pink2]          ___  __  [/bold deep_pink2]
+[bold white]        |  / _` |__  / _` [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |__) |__  /__` /  \ \  / [/bold deep_sky_blue1][bold deep_pink2] /\  |  |  |  /  \ [/bold deep_pink2]
+[bold white]        |  \__> |___ \__> [/bold white][bold deep_sky_blue1][bold deep_sky_blue1]   |  \ |___ .__/ \__/  \/  [/bold deep_sky_blue1][bold deep_pink2]/  \ \__/  |  \__/ [/bold deep_pink2]
+[bold white]                                       [/bold white]        [bold deep_pink2]v1.3.1 "Strelizia Apath"[/bold deep_pink2]
+                                                    [bold deep_pink2]/[/bold deep_pink2]"""
 
 # // RESOVAUTO
 # Written by George Cash-Blackmore
@@ -106,7 +106,7 @@ def count_daily_customers(date):
 
 def get_capacity(date):
     count = 0
-    for rooms in track(get_rooms(),"    [bold sea_green2]Getting daily customers...[/bold sea_green2]"):
+    for rooms in track(get_rooms(),"    [bold sea_green2]Counting bookings...[/bold sea_green2]"):
 
         avail_req = "https://api.resova.co.uk/v1/availability/calendar?start_date="+date+"&end_date="+date+"&item_ids="+str(rooms)
 
@@ -176,6 +176,68 @@ def get_same_day(date):
                             count += 1
     return count
 
+def parse_date(date):
+    date_array = []
+    for i in date.split("-"):
+        date_array.append(int(i))
+    
+    return date_array
+
+def parse_time(time):
+    time_array = []
+    pm = False
+    am = False
+    if time.rfind("pm"):
+        pm = True
+    if time.rfind("am"):
+        am = True
+    time_trimmed = time.rstrip("apm")
+    for i in time_trimmed.split(":"):
+        time_array.append(int(i))
+    if pm:
+        if time_array[0] != 12:
+            time_array[0] += 12
+    if am:
+        if time_array[0] == 12:
+            time_array[0] -= 12
+    return time_array
+
+def datetime_constructor(date,time):
+    parsed_datetime = datetime.datetime(date[0],date[1],date[2],time[0],time[1])
+    return parsed_datetime
+
+def date_constructor(date):
+    parsed_date = datetime.date(date[0],date[1],date[2])
+    return parsed_date
+
+def time_constructor(time):
+    parsed_time = datetime.time(time[0],time[1])
+    return parsed_time
+
+def parse_datetime(date,time):
+    return datetime_constructor(parse_date(date),parse_time(time))
+
+def get_same_day_v2(date,time):
+
+    daily_instances = get_daily_instances(date)
+    count = 0
+
+    for instance in track(daily_instances,"    [bold sea_green2]Counting bookings...    [/bold sea_green2]"):
+        booking = resova("https://api.resova.co.uk/v1/availability/instance/"+instance)
+        if booking["bookings"] != []:
+            if booking["bookable"] == False:
+                if booking["type"] != "blocked":
+                    if booking["bookings"][0]["item"]["id"] != raid60:
+                        booking_date = booking["bookings"][0]["transaction"]["formatted"]["created_d_string"]
+                        booking_time = booking["bookings"][0]["transaction"]["formatted"]["created_t_short"]
+                        
+                        booking_datetime = parse_datetime(booking_date,booking_time)
+
+                        if booking_datetime > parse_datetime(date,time) - datetime.timedelta(days=1):
+                            count += 1                            
+    return count
+
+
 last_output = ""
 last_output_msg = ""
 last_output_date = ""
@@ -197,14 +259,31 @@ def print_footer():
     print("""   [deep_sky_blue1][/deep_sky_blue1][bold white on deep_sky_blue1] {last_output} [/bold white on deep_sky_blue1][deep_pink2 on deep_sky_blue1][/deep_pink2 on deep_sky_blue1][bold white on deep_pink2] {msg} {date} [/bold white on deep_pink2][deep_pink2][/deep_pink2]
 """.format(last_output=last_output,msg=last_output_msg,date=last_output_date))
 
+def get_all_metrics(date, time=None):
+    try:
+        total_customers = count_daily_customers(date)
+        presales = get_presales(date)
+        same_day = get_same_day_v2(date, time) if time else get_same_day(date)
+        availability = get_capacity(date)
+        
+        return {
+            "total_customers": total_customers,
+            "presales": presales,
+            "same_day": same_day,
+            "availability": availability
+        }
+    except Exception as e:
+        print(f"\n[deep_pink2]ERROR! {str(e)}[/deep_pink2]")
+        return None
+
 def main():
     while True:
         cls()
         print(title)
         print("""   [orange1][/orange1][bold black on orange1]Choose an option from below to begin...[/bold black on orange1][orange1][/orange1]
               
-   [1] Daily customers (exc. RA/ID)  [2] Daily presales  [3] Same-day bookings [4] Capacity
-   [deep_pink2][0] Exit (ctrl+c)[/deep_pink2]  [bold sea_green2]\[help][/bold sea_green2]
+   [1] Customers    [2] Presales    [3] Same-day    [4] Capacity    [5] Full Report
+   [bold sea_green2]\[help][/bold sea_green2] [deep_pink2][0] Exit (ctrl+c)[/deep_pink2]  
             """)
         
         global just_launched
@@ -260,8 +339,8 @@ def main():
                 cls()
                 print(title)
                 presales = get_presales(date)
-                print("\n",presales," total presale drinks on",date)
-                print("£",presales*4.00,"total value @ £4.00/token")
+                #print("\n",presales," total presale drinks on",date)
+                print("£",presales*4.00,"total presales value")
                 set_last_output(str("£"+str(presales*4.00)),"total presales value on",date)
                 if input("Continue? [y/n]? ") == "n":
                     break
@@ -284,10 +363,14 @@ def main():
                 date = today
             if date == "yesterday" or date ==  "y":
                 date = yesterday
+            print("   [orange1][/orange1][bold black on orange1]When were start times sent?[/bold black on orange1][orange1][/orange1]")
+            print("   [HH:MM][am/pm] eg. 5:10pm")
+            print("")
+            time = input(": ")
             try:
                 cls()
                 print(title)
-                same_day = get_same_day(date)
+                same_day = get_same_day_v2(date,time)
                 print(same_day,"same day bookings on",date)
                 set_last_output(same_day,"same day bookings on",date)
                 if input("Continue? [y/n]? ") == "n":
@@ -326,11 +409,53 @@ def main():
                 print("\n[deep_pink2]ERROR! Maybe you typed the date wrong?[/deep_pink2]")
                 if input("Try again? [y/n]? ") == "n":
                     break
+        if userinput == "5":
+            cls()
+            print(title)
+            print("""   [orange1][/orange1][bold black on orange1]For which day?[/bold black on orange1][orange1][/orange1]
+   \[[bold deep_sky_blue1]t[/bold deep_sky_blue1]oday] \[[bold deep_sky_blue1]y[/bold deep_sky_blue1]esterday] \[YYYY-MM-DD]
+                  """)
+            date = input(": ")
+            print("")
+            if date == "today" or date == "t":
+                date = today
+            if date == "yesterday" or date ==  "y":
+                date = yesterday
+            print("   [orange1][/orange1][bold black on orange1]When were start times sent? (optional)[/bold black on orange1][orange1][/orange1]")
+            print("   [HH:MM][am/pm] eg. 5:10pm")
+            print("")
+            time = input(": ")
+            try:
+                cls()
+                print(title)
+                metrics = get_all_metrics(date, time)
+                if metrics:
+                    print(f"{metrics['total_customers']} customers visited on {date}")
+                    print(f"£{metrics['presales']*4.00} total presales value on {date}")
+                    print(f"{metrics['same_day']} same day bookings on {date}")
+                    print(f"{metrics['availability']} rooms booked on {date}")
+                    set_last_output("Full report", "retrieved for", date)
+                if input("Continue? [y/n]? ") == "n":
+                    break
+            except:
+                cls()
+                print(title)
+                print("\n[deep_pink2]ERROR! Maybe you typed the date wrong?[/deep_pink2]")
+                if input("Try again? [y/n]? ") == "n":
+                    break
         if userinput == "debug":
             cls()
             print(title)
             print("[bold orange1]   ++DEBUG++[/bold orange1]")
-            print("   Check documentation for debug features")
+            print(""" 
+   instance_id  -  prints all instance IDs for the day
+   avail        -  prints availability for the day
+   rooms        -  prints all room IDs
+   calls        -  prints API calls since start
+   av_test      -  prints capacity for the day
+   samedaytest  -  prints same-day bookings for the day
+   datetest     -  prints a parsed datetime
+""")
             debuginput = input(": ")
             if debuginput == "instance_id":
                 print(get_daily_instances(today))
@@ -345,6 +470,10 @@ def main():
                 print(api_calls,"api calls since start.")
             if debuginput == "av_test":
                 print(get_capacity(today))
+            if debuginput == "samedaytest":
+                print(get_same_day_v2(today,"5:10pm"))
+            if debuginput == "datetest":
+                print(parse_datetime("2024-01-01","5:10pm"))
             if input(": "):
                 pass
         if userinput == "help":
@@ -354,6 +483,9 @@ def main():
    In the main menu, type one of the listed numbers to access a function. Must functions
    will ask you for a date, you may type "today", "yesterday", or any date in the format
    "YYYY-MM-DD", where YYYY is the year, MM, is the month, and DD is the day. 
+
+   Same-day bookings also require a time input, in the format "HH:MM\[am/pm]". Weird
+   things may happen if you enter 00:00pm, or other non-standard times, so don't do that.
    
    If you find your input isn't working, the most likely problem is a misformed input,
    so make sure you've included a dash "-" on your date input, and don't have any spaces
