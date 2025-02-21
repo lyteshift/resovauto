@@ -30,7 +30,7 @@ I would advise creating a shortcut to ```launch.bat``` and placing it in a conve
 - [x] Counting daily customers
 - [x] Summing total bar presales
 - [x] Counting same-day bookings
-- [ ] Full daily report automation
+- [x] Full daily report automation
 - [x] Capacity (total timeslots booked)
 
 ### Potential
